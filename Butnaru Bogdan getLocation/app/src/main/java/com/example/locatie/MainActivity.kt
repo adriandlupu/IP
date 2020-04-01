@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 fusedLocationProviderClient.removeLocationUpdates(locationCallback)
 
-                btn_start_updatesbutton.isEnabled=!btn_start_updates.isEnabled
+                btn_start_updates.isEnabled=!btn_start_updates.isEnabled
                 btn_stop_updates.isEnabled=!btn_stop_updates.isEnabled
 
             });
