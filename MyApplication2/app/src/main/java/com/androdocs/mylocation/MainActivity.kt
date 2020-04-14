@@ -53,11 +53,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showNearbyPlants() {
-        val filteredList = mutableListOf<String>()
+        var filteredList = mutableListOf<String>()
         plantList.forEach { plant ->
-            if(x-plant.lat.toDouble()>-0.00001&&x-plant.lat.toDouble()<0.00001&&y-plant.long.toDouble()>-0.00001&&y-plant.long.toDouble()<0.00001)
-            filteredList.add(plant.name)
+            plant.locatii.forEach{ locatie ->
+                if(x-locatie.lat.toDouble()>-0.00001&&x-locatie.lat.toDouble()<0.00001&&y-locatie.long.toDouble()>-0.00001&&y-locatie.long.toDouble()<0.00001)
+                    filteredList.add(plant.name)
+            }
+
         }
+        filteredList=filteredList.toSet().toMutableList()
         plantsListView.adapter =
             ArrayAdapter<String>(this@MainActivity, R.layout.plant_layout, filteredList)
     }
@@ -91,13 +95,21 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val gson = Gson()
                 val plants = mutableListOf<Plant>()
+                //Log.d(TAG,dataSnapshot.getValue()..toString())
+
                 dataSnapshot.children.forEach { plant ->
-                    val newPlant = gson.fromJson(plant.value.toString(), Plant::class.java)
+                    val newPlant = Plant(plant.key.toString(), mutableListOf())
+                    dataSnapshot.child(plant.key.toString()).child("locatii").children.forEach{ locatie ->
+                        newPlant.locatii.add(gson.fromJson(locatie.value.toString(), Locatie::class.java))
+
+                    }
+
                     newPlant.name = plant.key.toString()
                     plants.add(newPlant)
                 }
+                Log.d(TAG,plants.toString())
                 plantList = plants
-                showNearbyPlants()
+                //showNearbyPlants()
             }
 
             override fun onCancelled(error: DatabaseError) {
