@@ -1,0 +1,19 @@
+Daniel Rusu - 2A1
+
+1) Ce ati reusit sa faceti in aceasta iteratie?
+In aceasta iteratie am reusit sa alcatuiesc algoritmul care pentru o locatie primita,
+verifica daca acest punct se afla intr-o zona specifica anumitor plante, zona determinata
+de mai multe coordonate (sub forma unui poligon oarecare cu numar variabil de varfuri)
+Am alcatuit algoritmul in limbajul C++ si l-am testat, astfel colegii mei sa il poata 
+transpune in Kotlin pentru a fi integrat in aplicatie.
+Fisiere: folderul solutieLocalizareCPP
+
+2) Ce probleme ati avut?
+Singura problema a fost din cauza necunoasterii limbajului Kotlin, astfel nu am putut
+scrie acest algoritm direct in Kotlin, iar timpul a fost insuficient in aceasta saptamana
+pentru a putea rezolva aceasta problema, astfel impreuna cu echipa, am decis ca pentru
+aceasta iteratie sa procedam in acest fel
+
+3) Ce planuri aveti in continuare
+Doresc sa ma pun la punct cu acest limbaj ca sa putem economisi timp pe partea de
+implementare a diferitilor algoritmi ce vor mai fi necesari in continuare
