@@ -1,0 +1,16 @@
+1) Ce ati reusit sa faceti in aceasta iteratie?
+      In aceasta iteratie am reusit sa implementez algoritmul care afiseaza locatiile anumitor plante date de mine cu ajutorul unui
+      API(in cazul meu Google Maps API).
+      Primul lucru pe care l-am facut a fost sa intru pe site-ul Google Developers, iar cu ajutorul acestuia am obtinut un API KEY de la
+    Google Maps. In continuare, am integrat acel API KEY in aplicatie si am inceput sa implementez cod. La final, am introdus 3 exemple
+    de plante, fiecare planta avand coordonate diferite. In momentul rularii algoritmului, se deschide in Emulatorul Android aplicatia
+    Google Maps si afiseaza locatiile celor 3 plante.
+    
+    2)Ce probleme ati avut?
+      Am avut o singura problema. Deoarece nu am ales un Emulator bun, in momentul in care rulam aplicatia se deschidea Google Maps, insa
+      nu afisa nimic. Am rezolvat aceasta problema conectandu-mi telefonul personal la aplicatie.
+      
+      3)Ce planuri aveti in continuare?
+      In continuare imi doresc sa ma familiarizez mai mult cu acest limbaj si cu aplicatia Android Studio.
+      
+      
