@@ -10,5 +10,8 @@ In continuare voi inceraca sa integrez alogoritmul pe care l-au facut colegii (c
 
 
 Aplicatia pe care am creat-o am incarcat-o pe GitHub sub denumirea LocationGoogleApi.
+Link aplicatie: https://github.com/adriandlupu/IP/tree/Madalina
+Link Api: https://developers.google.com/maps/documentation/javascript/get-api-key?hl=ro
+Link Source Code: https://www.youtube.com/watch?v=suwq7Nta3oM&t=67s
 
 Bitiușcă Mădălina, grupa A1.
