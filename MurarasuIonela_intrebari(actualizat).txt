@@ -1,0 +1,12 @@
+1) Ce ati reusit sa faceti in aceasta iteratie?
+	In aceasta iteratie am reusit sa ma familiarizez cu limbajul Kotlin si am incercat sa creez in cadrul 
+aplicatiei posibilitatea ca locatia sa isi poata da refresh automat dupa un anumit numar de secunde.
+
+2) Ce probleme ati avut?
+	Problemele intampinate au fost din cauza necunoasterii limbajului Kotlin.
+
+3) Ce planuri aveti in continuare
+	Imi propun sa rezolv problemele legate de necunoasterea limbajului pentru ca viitoarele task-uri 
+sa fie rezolvate mai usor.
+
+Link:https://stackoverflow.com/questions/43348623/how-to-call-a-function-after-delay-in-kotlin?fbclid=IwAR2OPLpCdyQpffPz6KhRxkmLzas0KKwX4e8KoHNL8h4pAR_NxIStqvuDOGY
