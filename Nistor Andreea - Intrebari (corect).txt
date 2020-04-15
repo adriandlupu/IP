@@ -1,0 +1,9 @@
+1.	Ce ati reusit sa faceti in aceasta iteratie?
+In aeasta iteratie am reusit sa fac o aplicatie care afiseaza locatia mea utilizand o cheie API de la Google.
+2.	Ce probleme ati avut?
+Singura problema este ca odata ce am rulat pentru prima oara aplicatia, s-au generat foarte multe fisiere si am putut incarca pe GitHub o arhiva a programului. 
+Aplicatia functioneaza, dar doar asa am putut sa o incarc pe site.
+3.	Ce planuri aveti in continuare?
+O propunere a mea ar fi ca in cazul in care persoana care are acces la aplicatia noastra, dar nu se afla in Gradina Botanica, cu ajutorul hartilor de la Google sa o putem directiona catre Gradina Botanica.
+
+Link: https://www.youtube.com/watch?v=eiexkzCI8m8
