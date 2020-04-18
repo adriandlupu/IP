@@ -24,12 +24,19 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.lang.Math.abs
+import java.lang.Math.pow
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity() {
 
+    var firstL= Locatie("110.1","110.1")
+    var secondL= Locatie("110.1","110.1")
     var x=1.1
     var y=1.1
+    var slope=0.0
 
     private lateinit var database: FirebaseDatabase
     private var plantList = mutableListOf<Plant>()
@@ -45,21 +52,47 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         database = FirebaseDatabase.getInstance()
-        getAllPlants()
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         getLastLocation()
+        getAllPlants()
     }
+
+
+
+
 
     fun showNearbyPlants() {
         var filteredList = mutableListOf<String>()
         plantList.forEach { plant ->
+            firstL.lat="110.1"
+            firstL.long="110.1"
+            secondL.lat="110.1"
+            secondL.long="110.1"
             plant.locatii.forEach{ locatie ->
-                if(x-locatie.lat.toDouble()>-0.00001&&x-locatie.lat.toDouble()<0.00001&&y-locatie.long.toDouble()>-0.00001&&y-locatie.long.toDouble()<0.00001)
-                    filteredList.add(plant.name)
-            }
+                if(((locatie.lat.toDouble()-y)*(locatie.lat.toDouble()-y)+(locatie.long.toDouble()-x)*(locatie.long.toDouble()-x))<((firstL.lat.toDouble()-y)*(firstL.lat.toDouble()-y+(firstL.long.toDouble()-x)*(firstL.long.toDouble()-x))))
+                {
+                    firstL.lat=locatie.lat
+                    firstL.long=locatie.long
+                }
+                else if(((locatie.lat.toDouble()-y)*(locatie.lat.toDouble()-y)+(locatie.long.toDouble()-x)*(locatie.long.toDouble()-x))<((secondL.lat.toDouble()-y)*(secondL.lat.toDouble()-y)+(secondL.long.toDouble()-x)*(secondL.long.toDouble()-x)))
+                {
+                    secondL.lat=locatie.lat
+                    secondL.long=locatie.long
+                }
+                Log.d("cevaaertrea",firstL.lat.toString())
+                Log.d("cevaaertrea", sqrt(firstL.lat.toDouble()).toString())
 
+            }
+            /*slope=(firstL.lat.toDouble()-secondL.lat.toDouble()) //aici este vorba de ecuatia unei drepte, care va fi necesara pentru distranta de la punct la dreapta
+            if((abs(x-slope*y+slope*firstL.long.toDouble()-firstL.lat.toDouble())/(slope))<0.000001)
+                filteredList.add(plant.name)
+            var m=abs(x-slope*y+slope*firstL.long.toDouble()-firstL.lat.toDouble())/(abs(slope)+1)
+            Log.d("cevaaa",m.toString())*/
+            if(abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble())) <0.001)
+                filteredList.add(plant.name)
+            var m=abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble()))
+            Log.d("cevaaa",m.toString())
         }
         filteredList=filteredList.toSet().toMutableList()
         plantsListView.adapter =
@@ -103,13 +136,13 @@ class MainActivity : AppCompatActivity() {
                         newPlant.locatii.add(gson.fromJson(locatie.value.toString(), Locatie::class.java))
 
                     }
-
                     newPlant.name = plant.key.toString()
+                    
                     plants.add(newPlant)
                 }
                 Log.d(TAG,plants.toString())
                 plantList = plants
-                //showNearbyPlants()
+                showNearbyPlants()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -130,8 +163,8 @@ class MainActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        x=location.latitude;
-                        y=location.longitude;
+                        y=location.latitude;
+                        x=location.longitude;
                         //findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
                         //findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
                     }
@@ -155,7 +188,7 @@ class MainActivity : AppCompatActivity() {
         mLocationRequest.numUpdates = 1
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        mFusedLocationClient!!.requestLocationUpdates(
+        mFusedLocationClient.requestLocationUpdates(
             mLocationRequest, mLocationCallback,
             Looper.myLooper()
         )
