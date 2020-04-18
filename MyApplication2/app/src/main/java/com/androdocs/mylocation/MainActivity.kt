@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+//import android.icu.util.TimeUnit
 import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Math.abs
 import java.lang.Math.pow
+import java.util.concurrent.TimeUnit
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -80,19 +82,13 @@ class MainActivity : AppCompatActivity() {
                     secondL.lat=locatie.lat
                     secondL.long=locatie.long
                 }
-                Log.d("cevaaertrea",firstL.lat.toString())
-                Log.d("cevaaertrea", sqrt(firstL.lat.toDouble()).toString())
 
             }
-            /*slope=(firstL.lat.toDouble()-secondL.lat.toDouble()) //aici este vorba de ecuatia unei drepte, care va fi necesara pentru distranta de la punct la dreapta
-            if((abs(x-slope*y+slope*firstL.long.toDouble()-firstL.lat.toDouble())/(slope))<0.000001)
+
+            if(abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble())) <plant.range.toDouble()*0.0000089)
                 filteredList.add(plant.name)
-            var m=abs(x-slope*y+slope*firstL.long.toDouble()-firstL.lat.toDouble())/(abs(slope)+1)
-            Log.d("cevaaa",m.toString())*/
-            if(abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble())) <0.001)
-                filteredList.add(plant.name)
-            var m=abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble()))
-            Log.d("cevaaa",m.toString())
+            //else if(((plant.locatii[0].lat.toDouble()-y)*(plant.locatii[0].lat.toDouble()-y+(plant.locatii[0].long.toDouble()-x)*(plant.locatii[0].long.toDouble()-x)))<((firstL.lat.toDouble()-y)*(firstL.lat.toDouble()-y+(firstL.long.toDouble()-x)*(firstL.long.toDouble()-x))))
+             //   filteredList.add(plant.name)
         }
         filteredList=filteredList.toSet().toMutableList()
         plantsListView.adapter =
@@ -131,13 +127,13 @@ class MainActivity : AppCompatActivity() {
                 //Log.d(TAG,dataSnapshot.getValue()..toString())
 
                 dataSnapshot.children.forEach { plant ->
-                    val newPlant = Plant(plant.key.toString(), mutableListOf())
+                    val newPlant = Plant(plant.key.toString(), plant.child("range").toString(),mutableListOf())
                     dataSnapshot.child(plant.key.toString()).child("locatii").children.forEach{ locatie ->
                         newPlant.locatii.add(gson.fromJson(locatie.value.toString(), Locatie::class.java))
 
                     }
                     newPlant.name = plant.key.toString()
-                    
+                    newPlant.range=plant.child("range").value.toString()
                     plants.add(newPlant)
                 }
                 Log.d(TAG,plants.toString())
@@ -165,8 +161,12 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         y=location.latitude;
                         x=location.longitude;
+                        Log.d("here",x.toString())
+                        getAllPlants()
+                        requestNewLocationData()
                         //findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
                         //findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
+
                     }
                 }
             } else {
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
-        mLocationRequest.numUpdates = 1
+        mLocationRequest.numUpdates = 100000
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mFusedLocationClient.requestLocationUpdates(
@@ -197,6 +197,10 @@ class MainActivity : AppCompatActivity() {
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
+            x=mLastLocation.longitude
+            y=mLastLocation.latitude
+            Log.d("here1",x.toString())
+            getAllPlants()
             //findViewById<TextView>(R.id.latTextView).text = mLastLocation.latitude.toString()
             //findViewById<TextView>(R.id.lonTextView).text = mLastLocation.longitude.toString()
         }
