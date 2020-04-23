@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     var secondL= Locatie("110.1","110.1")
     var x=1.1
     var y=1.1
-    var slope=0.0
 
     private lateinit var database: FirebaseDatabase
     private var plantList = mutableListOf<Plant>()
@@ -87,8 +86,8 @@ class MainActivity : AppCompatActivity() {
 
             if(abs((secondL.lat.toDouble()-firstL.lat.toDouble())*x-(secondL.long.toDouble()-firstL.long.toDouble())*y+secondL.long.toDouble()*firstL.lat.toDouble()-secondL.lat.toDouble()*firstL.long.toDouble())/sqrt((secondL.lat.toDouble()-firstL.lat.toDouble())*(secondL.lat.toDouble()-firstL.lat.toDouble())+(secondL.long.toDouble()-firstL.long.toDouble())*(secondL.long.toDouble()-firstL.long.toDouble())) <plant.range.toDouble()*0.0000089)
                 filteredList.add(plant.name)
-            //else if(((plant.locatii[0].lat.toDouble()-y)*(plant.locatii[0].lat.toDouble()-y+(plant.locatii[0].long.toDouble()-x)*(plant.locatii[0].long.toDouble()-x)))<((firstL.lat.toDouble()-y)*(firstL.lat.toDouble()-y+(firstL.long.toDouble()-x)*(firstL.long.toDouble()-x))))
-             //   filteredList.add(plant.name)
+            else if(((plant.locatii[0].lat.toDouble()-y)*(plant.locatii[0].lat.toDouble()-y+(plant.locatii[0].long.toDouble()-x)*(plant.locatii[0].long.toDouble()-x)))<((firstL.lat.toDouble()-y)*(firstL.lat.toDouble()-y+(firstL.long.toDouble()-x)*(firstL.long.toDouble()-x))))
+                filteredList.add(plant.name)
         }
         filteredList=filteredList.toSet().toMutableList()
         plantsListView.adapter =
@@ -124,7 +123,6 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val gson = Gson()
                 val plants = mutableListOf<Plant>()
-                //Log.d(TAG,dataSnapshot.getValue()..toString())
 
                 dataSnapshot.children.forEach { plant ->
                     val newPlant = Plant(plant.key.toString(), plant.child("range").toString(),mutableListOf())
