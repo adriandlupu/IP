@@ -134,6 +134,12 @@ class MainActivity : AppCompatActivity() {
                     newPlant.range=plant.child("range").value.toString()
                     plants.add(newPlant)
                 }
+                var loc0 = Locatie("47.14328", "27.582472")
+
+                val newPlant = Plant("Trandafir", "10", mutableListOf())
+                newPlant.locatii.add(loc0)
+
+                plants.add(newPlant)
                 Log.d(TAG,plants.toString())
                 plantList = plants
                 showNearbyPlants()
