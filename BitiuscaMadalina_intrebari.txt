@@ -1,0 +1,17 @@
+a) Ce ati reusit sa faceti in aceasta iteratie?
+La aceasta iteratie am integrat Google Map la o aplicatie Android, utilizand API key generat de Google Maps APIs. Aplicatia determina locatia curenta si o afiseaza pe harta de la Google Map.
+
+b) Ce probleme ati avut?
+Nu am intampinat probleme la aceasta iteratie.
+
+c) Ce planuri aveti in continuare?
+In continuare voi inceraca sa integrez alogoritmul pe care l-au facut colegii (cel  care determina daca utilizatorul se afla in zona specifica unui anumit tip de planta) la aplicatia pe care am creat-o.
+
+
+
+Aplicatia pe care am creat-o am incarcat-o pe GitHub sub denumirea LocationGoogleApi.
+Link aplicatie: https://github.com/adriandlupu/IP/tree/Madalina
+Link Api: https://developers.google.com/maps/documentation/javascript/get-api-key?hl=ro
+Link Source Code: https://www.youtube.com/watch?v=suwq7Nta3oM&t=67s
+
+Bitiușcă Mădălina, grupa A1.
