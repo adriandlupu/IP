@@ -134,6 +134,26 @@ class MainActivity : AppCompatActivity() {
                     newPlant.range=plant.child("range").value.toString()
                     plants.add(newPlant)
                 }
+
+//                47.175454, 27.540770
+  //              47.175495, 27.542046
+    //            47.174933, 27.542078
+      //          47.175137, 27.540688
+
+
+                var locatie0 = Locatie("27.541000", "47.175000")
+                var locatie1 = Locatie("27.540770", "47.175454")
+                var locatie2 = Locatie("27.542046", "47.175495")
+                var locatie3 = Locatie("27.542078", "47.174933")
+                var locatie4 = Locatie("27.540688", "47.175137")
+
+                val newPlant = Plant("Daniel", "10", mutableListOf())
+                newPlant.locatii.add(locatie0)
+                newPlant.locatii.add(locatie1)
+                newPlant.locatii.add(locatie2)
+                newPlant.locatii.add(locatie3)
+                newPlant.locatii.add(locatie4)
+                plants.add(newPlant)
                 Log.d(TAG,plants.toString())
                 plantList = plants
                 showNearbyPlants()
@@ -198,6 +218,7 @@ class MainActivity : AppCompatActivity() {
             x=mLastLocation.longitude
             y=mLastLocation.latitude
             Log.d("here1",x.toString())
+            Log.d("here2", y.toString())
             getAllPlants()
             //findViewById<TextView>(R.id.latTextView).text = mLastLocation.latitude.toString()
             //findViewById<TextView>(R.id.lonTextView).text = mLastLocation.longitude.toString()
