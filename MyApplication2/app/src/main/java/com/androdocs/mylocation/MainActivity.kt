@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun getAllPlants() {
+    private fun getAllPlants() {//daniel
         database.reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val gson = Gson()
@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
+    private fun getLastLocation() {//madalina
         if (checkPermissions()) {
             if (isLocationEnabled()) {
 
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun requestNewLocationData() {
+    private fun requestNewLocationData() {//ionela
         var mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private val mLocationCallback = object : LocationCallback() {
+    private val mLocationCallback = object : LocationCallback() {//ionella
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
             x=mLastLocation.longitude
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isLocationEnabled(): Boolean {
+    private fun isLocationEnabled(): Boolean {//bogdan
         var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun checkPermissions(): Boolean {
+    private fun checkPermissions(): Boolean {//bogdan
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun requestPermissions() {
+    private fun requestPermissions() {//andreea
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {//andreea
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLastLocation()
