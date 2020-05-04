@@ -3,6 +3,10 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.plants = functions.https.onRequest(async (req, res) => {
+    if(req.method!=="POST"){
+        res.status(400).json({message:"Only POST is allowed"}).end();
+        return;
+    }
     let body = req.body;
     if (!body['long'] || !body['lat']) {
         res.status(400).json({message: "Specifiy lat and long"}).end();
@@ -25,6 +29,8 @@ exports.plants = functions.https.onRequest(async (req, res) => {
             let locations = data[plant]['locatii'];
             Object.values(locations).forEach((locatie) => {
                 if (((parseFloat(locatie.lat) - y) * (parseFloat(locatie.lat) - y) + (parseFloat(locatie.long) - x) * (parseFloat(locatie.long) - x)) < ((parseFloat(firstL.lat) - y) * (parseFloat(firstL.lat) - y) + (parseFloat(firstL.long) - x) * (parseFloat(firstL.long) - x))) {
+                    secondL.lat = firstL.lat;
+                    secondL.long = firstL.long;
                     firstL.lat = parseFloat(locatie.lat);
                     firstL.long = parseFloat(locatie.long);
                 } else if (((parseFloat(locatie.lat) - y) * (parseFloat(locatie.lat) - y) + (parseFloat(locatie.long) - x) * (parseFloat(locatie.long) - x)) < ((parseFloat(secondL.lat) - y) * (parseFloat(secondL.lat) - y) + (parseFloat(secondL.long) - x) * (parseFloat(secondL.long) - x))) {
