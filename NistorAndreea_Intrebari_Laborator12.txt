@@ -1,0 +1,10 @@
+a) Ce ati reusit sa faceti in aceasta iteratie?
+
+In aceasta iteratie am facut testare automata pe 2 functii din aplicatie, requestPermission() si onRequestPermissionResult().
+
+b) Ce probleme ati avut?
+Am intampinat probleme in gasirea informatiilor pentru testare junit in kotlin, dar in final m-am descurcat.
+
+c) Ce planuri aveti in continuare?
+
+In continuare doresc sa ma implic in partea de integrare.
