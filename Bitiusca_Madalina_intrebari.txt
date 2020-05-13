@@ -1,0 +1,11 @@
+a) Ce ati reusit sa faceti in aceasta iteratie?
+La aceasta iteratie am facut testare Junit pentru functia getLastLocation.
+
+b) Ce probleme ati avut?
+Am intampinat probleme in gasirea unei documenatii JUnit pentru Kotlin. 
+
+c) Ce planuri aveti in continuare?
+In continuare doresc sa implic in partea de integrare.
+
+Link: https://github.com/adriandlupu/IP/blob/Madalina/Testare/app/src/test/java/com/androdocs/mylocation/GetLAstLocationTest1.kt
+
