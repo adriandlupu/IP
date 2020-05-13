@@ -14,10 +14,8 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.androdocs.mylocation.BuildConfig.DEBUG
 import com.google.android.gms.location.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,16 +24,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import org.jetbrains.annotations.TestOnly
 import java.lang.Math.abs
-import java.lang.Math.pow
-import java.util.concurrent.TimeUnit
-import kotlin.math.pow
 import kotlin.math.sqrt
-import kotlin.random.Random
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     var firstL = Locatie("110.1", "110.1")
     var secondL = Locatie("110.1", "110.1")
@@ -102,13 +95,13 @@ class MainActivity : AppCompatActivity() {
         myRef.child("long").setValue(long)
     }
 
-    fun getPlantDetails(name: String) {
-        database.getReference(name).addValueEventListener(object : ValueEventListener {
+    fun getPlantDetails(name: MainActivity) {
+        database.getReference(name.toString()).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value.toString()
                 val gson = Gson()
                 val plant = gson.fromJson(value, Plant::class.java)
-                plant.name = name
+                plant.name = name.toString()
                 //   Log.d(TAG, plant.toString())
             }
 
@@ -172,12 +165,6 @@ class MainActivity : AppCompatActivity() {
                         x = location.longitude;
                         Log.d("here", x.toString())
 
-                        if (y.isNaN()||y<-90||y>90) {
-                            Log.e(TAG, "ERROR getLastLocation() y is not a number")
-                        }
-                        if (x.isNaN()||x<-180||y>180) {
-                            Log.e(TAG, "ERROR getLastLocation() x is not a number")
-                        }
                         getAllPlants()
                         requestNewLocationData()
                         //findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
