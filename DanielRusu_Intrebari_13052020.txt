@@ -1,0 +1,44 @@
+Ce ati reusit sa faceti in aceasta iteratie?
+Am reusit sa finalizez codul de unit test pentru functiile atribuite.
+
+Ce probleme ati avut?
+Acum nicio problema. M-am acomodat si cu sintaxa Kotlin si pot spune ca au inceput sa mearga lucrurile mult mai bine.
+
+Ce planuri aveti in continuare?
+Sa imi ajut colegii sa finalizeze integrarea.
+
+Las mai jos si codul scris pentru aceasta iteratie:
+
+app/src/test/java/com.androdocs.mylocation/GetAllPlantsUnitTest.kt
+
+package com.androdocs.mylocation
+
+import org.junit.Test
+
+class MainActivityTest {
+    @Test
+    fun getAllPlants() {
+        val x = MainActivity()
+        x.getAllPlants()
+        assert(x.checkSize(5))
+    }
+}
+
+app/src/main/java/com.androdocs.mylocation/MainActivity.kt
+
+...
+
+class MainActivity : AppCompatActivity() {
+...
+
+
+    fun checkSize(size: Int): Boolean {
+        if(plantList.size == size) {
+            return true
+        }
+
+        return false
+    }
+
+...
+}
