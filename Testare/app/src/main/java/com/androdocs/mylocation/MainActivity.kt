@@ -40,10 +40,14 @@ open class MainActivity : AppCompatActivity() {
 
 
     companion object {
+        fun getAllPLants() {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
         const val TAG = "MainActivity"
     }
 
-    val PERMISSION_ID = 42
+    open val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,52 +116,55 @@ open class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun getAllPlants() { //daniel
-        database.reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val gson = Gson()
-                val plants = mutableListOf<Plant>()
+    fun getAllPlants() { //daniel
+      val addValueEventListener =
+            database.reference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val gson = Gson()
+                    val plants = mutableListOf<Plant>()
 
-                dataSnapshot.children.forEach { plant ->
-                    val newPlant = Plant(
-                        plant.key.toString(),
-                        plant.child("range").toString(),
-                        mutableListOf()
-                    )
-                    dataSnapshot.child(plant.key.toString()).child("locatii")
-                        .children.forEach { locatie ->
-                        newPlant.locatii.add(
-                            gson.fromJson(
-                                locatie.value.toString(),
-                                Locatie::class.java
-                            )
+                    dataSnapshot.children.forEach { plant ->
+                        val newPlant = Plant(
+                            plant.key.toString(),
+                            plant.child("range").toString(),
+                            mutableListOf()
                         )
+                        dataSnapshot.child(plant.key.toString()).child("locatii")
+                            .children.forEach { locatie ->
+                            newPlant.locatii.add(
+                                gson.fromJson(
+                                    locatie.value.toString(),
+                                    Locatie::class.java
+                                )
+                            )
 
+                        }
+                        newPlant.name = plant.key.toString()
+                        newPlant.range = plant.child("range").value.toString()
+                        plants.add(newPlant)
                     }
-                    newPlant.name = plant.key.toString()
-                    newPlant.range = plant.child("range").value.toString()
-                    plants.add(newPlant)
+                    Log.d(TAG, plants.toString())
+                    plantList = plants
+                    showNearbyPlants()
                 }
-                Log.d(TAG, plants.toString())
-                plantList = plants
-                showNearbyPlants()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
+
     }
 
 
+
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {/* madalina */
+     fun getLastLocation() {/* madalina */
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if (location == null) {
                         requestNewLocationData()
                     } else {
@@ -171,9 +178,7 @@ open class MainActivity : AppCompatActivity() {
                         //findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
                     }
                 }
-                if (mFusedLocationClient.lastLocation == null) {
-                    Log.e(TAG, "ERROR getLastLocation() lastLocation is null ")
-                }
+
             } else {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
@@ -186,8 +191,8 @@ open class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("MissingPermission")
-    private fun requestNewLocationData() {//ionela
-        var mLocationRequest = LocationRequest()
+    fun requestNewLocationData() {//ionela
+        val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
@@ -200,10 +205,9 @@ open class MainActivity : AppCompatActivity() {
         )
     }
 
-    private val mLocationCallback = object : LocationCallback() {
-        //ionella
+    private val mLocationCallback = object : LocationCallback() { //ionella
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
+            val mLastLocation: Location = locationResult.lastLocation
             x = mLastLocation.longitude
             y = mLastLocation.latitude
             Log.d("here1", x.toString())
@@ -213,16 +217,13 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isLocationEnabled(): Boolean {//bogdan
-        var locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-
+     fun isLocationEnabled(): Boolean {//bogdan
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER
         )
     }
 
-    private fun checkPermissions(): Boolean {//bogdan
+    fun checkPermissions(): Boolean {//bogdan
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -237,7 +238,7 @@ open class MainActivity : AppCompatActivity() {
         return false
     }
 
-    private fun requestPermissions() {//andreea
+     fun requestPermissions() {//andreea
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
